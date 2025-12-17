@@ -72,10 +72,13 @@ public final class PackInfo {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
         PackInfo packInfo = (PackInfo) o;
-        // Consider both hash and URL to ensure packs with different URLs but null hashes
+        // Consider both hash and URL to ensure packs with different URLs but null
+        // hashes
         // are tracked separately (important for URL_ONLY and HASH_OR_URL skip modes)
         return Objects.equals(hash, packInfo.hash) && Objects.equals(url, packInfo.url);
     }

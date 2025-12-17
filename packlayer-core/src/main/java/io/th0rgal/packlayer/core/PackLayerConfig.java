@@ -109,44 +109,44 @@ public final class PackLayerConfig {
             Path configPath = dataFolder.resolve(CONFIG_FILE);
 
             String defaultConfig = """
-                # PackLayer Configuration
-                # Optimizes resource pack distribution on proxy networks
-                
-                # Skip Mode - determines how PackLayer decides to skip duplicate packs
-                # Options:
-                #   HASH_ONLY    - Skip if SHA-1 hash matches (default, recommended)
-                #   URL_ONLY     - Skip if URL matches
-                #   HASH_OR_URL  - Skip if either hash OR URL matches
-                #   HASH_AND_URL - Skip only if both hash AND URL match
-                #   ALWAYS_SKIP  - Always skip pack sends (testing only)
-                #   NEVER_SKIP   - Never skip (effectively disables plugin)
-                skip-mode: HASH_ONLY
-                
-                # Server Filter - control which backend servers PackLayer applies to
-                server-filter:
-                  # Mode: DISABLED (all servers), WHITELIST, or BLACKLIST
-                  mode: DISABLED
-                  # List of server names (as defined in Velocity/BungeeCord config)
-                  servers:
-                    - lobby
-                    - hub
-                
-                # Trusted Domains - always skip packs from these domains
-                # Supports wildcards: *.example.com, cdn.example.com/*
-                trusted-domains:
-                  # - atlas.oraxen.com
-                  # - cdn.example.com
-                
-                # Grace period (ms) after server switch before applying skip logic
-                # Set to 0 to disable. Useful if backend servers intentionally re-send packs.
-                server-switch-grace-ms: 0
-                
-                # Enable debug logging
-                debug: false
-                
-                # Enable statistics tracking (packs skipped, bandwidth saved)
-                statistics-enabled: true
-                """;
+                    # PackLayer Configuration
+                    # Optimizes resource pack distribution on proxy networks
+
+                    # Skip Mode - determines how PackLayer decides to skip duplicate packs
+                    # Options:
+                    #   HASH_ONLY    - Skip if SHA-1 hash matches (default, recommended)
+                    #   URL_ONLY     - Skip if URL matches
+                    #   HASH_OR_URL  - Skip if either hash OR URL matches
+                    #   HASH_AND_URL - Skip only if both hash AND URL match
+                    #   ALWAYS_SKIP  - Always skip pack sends (testing only)
+                    #   NEVER_SKIP   - Never skip (effectively disables plugin)
+                    skip-mode: HASH_ONLY
+
+                    # Server Filter - control which backend servers PackLayer applies to
+                    server-filter:
+                      # Mode: DISABLED (all servers), WHITELIST, or BLACKLIST
+                      mode: DISABLED
+                      # List of server names (as defined in Velocity/BungeeCord config)
+                      servers:
+                        - lobby
+                        - hub
+
+                    # Trusted Domains - always skip packs from these domains
+                    # Supports wildcards: *.example.com, cdn.example.com/*
+                    trusted-domains:
+                      # - atlas.oraxen.com
+                      # - cdn.example.com
+
+                    # Grace period (ms) after server switch before applying skip logic
+                    # Set to 0 to disable. Useful if backend servers intentionally re-send packs.
+                    server-switch-grace-ms: 0
+
+                    # Enable debug logging
+                    debug: false
+
+                    # Enable statistics tracking (packs skipped, bandwidth saved)
+                    statistics-enabled: true
+                    """;
 
             Files.writeString(configPath, defaultConfig);
         } catch (IOException e) {
