@@ -1,0 +1,8 @@
+{
+  "id": "packlayer",
+  "name": "PackLayer",
+  "version": "${version}",
+  "description": "${description}",
+  "authors": ["Th0rgal"],
+  "main": "io.th0rgal.packlayer.velocity.PackLayerVelocityPlugin"
+}
