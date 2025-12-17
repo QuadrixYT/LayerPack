@@ -5,6 +5,7 @@ import org.yaml.snakeyaml.DumperOptions;
 import org.yaml.snakeyaml.Yaml;
 
 import java.io.*;
+import java.net.URI;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.*;
@@ -72,7 +73,10 @@ public final class PackLayerConfig {
             }
 
             List<String> servers = getList(serverFilter, "servers");
-            serverList = new HashSet<>(servers);
+            serverList = new HashSet<>();
+            for (String server : servers) {
+                serverList.add(server.toLowerCase(Locale.ROOT));
+            }
         }
 
         // Trusted domains
@@ -172,11 +176,25 @@ public final class PackLayerConfig {
     }
 
     public boolean isTrustedDomain(String url) {
-        if (trustedDomainPatterns.isEmpty()) {
+        if (trustedDomainPatterns.isEmpty() || url == null || url.isEmpty()) {
             return false;
         }
+
+        // Extract host from URL to prevent matching domain patterns in other URL parts
+        String host;
+        try {
+            URI uri = new URI(url);
+            host = uri.getHost();
+            if (host == null || host.isEmpty()) {
+                return false;
+            }
+        } catch (Exception e) {
+            return false;
+        }
+
         for (Pattern pattern : trustedDomainPatterns) {
-            if (pattern.matcher(url).find()) {
+            // Use matches() on the host only, requiring full host match
+            if (pattern.matcher(host).matches()) {
                 return true;
             }
         }

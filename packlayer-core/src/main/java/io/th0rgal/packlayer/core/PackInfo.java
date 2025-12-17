@@ -75,12 +75,14 @@ public final class PackInfo {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         PackInfo packInfo = (PackInfo) o;
-        return Objects.equals(hash, packInfo.hash);
+        // Consider both hash and URL to ensure packs with different URLs but null hashes
+        // are tracked separately (important for URL_ONLY and HASH_OR_URL skip modes)
+        return Objects.equals(hash, packInfo.hash) && Objects.equals(url, packInfo.url);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(hash);
+        return Objects.hash(hash, url);
     }
 
     @Override
