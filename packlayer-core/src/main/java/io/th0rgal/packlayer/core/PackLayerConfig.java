@@ -62,7 +62,9 @@ public final class PackLayerConfig {
             skipMode = SkipMode.HASH_ONLY;
         }
 
-        // Server filter
+        // Server filter - reset to defaults first to handle section removal on reload
+        serverFilterMode = ServerFilterMode.DISABLED;
+        serverList = new HashSet<>();
         Map<String, Object> serverFilter = getMap(data, "server-filter");
         if (serverFilter != null) {
             String modeStr = getString(serverFilter, "mode", "DISABLED");
@@ -73,7 +75,6 @@ public final class PackLayerConfig {
             }
 
             List<String> servers = getList(serverFilter, "servers");
-            serverList = new HashSet<>();
             for (String server : servers) {
                 serverList.add(server.toLowerCase(Locale.ROOT));
             }

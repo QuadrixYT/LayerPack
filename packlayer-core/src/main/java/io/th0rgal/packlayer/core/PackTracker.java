@@ -53,17 +53,22 @@ public final class PackTracker {
             }
         }
 
-        // Check trusted domains
-        String url = packInfo.getUrl();
-        if (url != null && config.isTrustedDomain(url)) {
-            // Trusted domain - skip without checking hash
-            return true;
-        }
-
         // Check against existing packs
         Set<PackInfo> existingPacks = playerPacks.get(playerId);
+        String url = packInfo.getUrl();
+        boolean isTrustedDomain = url != null && config.isTrustedDomain(url);
+
         if (existingPacks != null) {
             for (PackInfo existing : existingPacks) {
+                // For trusted domains, skip if player already has ANY pack from this domain
+                // (more aggressive duplicate detection - skip based on domain alone)
+                if (isTrustedDomain) {
+                    String existingUrl = existing.getUrl();
+                    if (existingUrl != null && config.isTrustedDomain(existingUrl)) {
+                        return true; // Already has a pack from a trusted domain
+                    }
+                }
+                // Standard duplicate check based on skip mode
                 if (packInfo.matches(existing, mode)) {
                     return true; // Duplicate found
                 }
