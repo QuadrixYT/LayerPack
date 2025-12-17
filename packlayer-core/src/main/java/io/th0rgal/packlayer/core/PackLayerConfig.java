@@ -131,8 +131,8 @@ public final class PackLayerConfig {
                         - lobby
                         - hub
 
-                    # Trusted Domains - always skip packs from these domains
-                    # Supports wildcards: *.example.com, cdn.example.com/*
+                    # Trusted Domains - always skip packs from these domains (matches host only)
+                    # Supports subdomain wildcards: *.example.com matches cdn.example.com
                     trusted-domains:
                       # - atlas.oraxen.com
                       # - cdn.example.com
