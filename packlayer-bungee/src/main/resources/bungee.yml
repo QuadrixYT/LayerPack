@@ -1,0 +1,5 @@
+name: PackLayer
+main: io.th0rgal.packlayer.bungee.PackLayerBungeePlugin
+version: ${version}
+description: ${description}
+author: Th0rgal
