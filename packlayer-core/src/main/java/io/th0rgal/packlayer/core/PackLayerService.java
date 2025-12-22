@@ -11,7 +11,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.function.Consumer;
 
 /**
- * Main service for PackLayer functionality.
+ * Main service for LayerPack functionality.
  * Platform plugins (Velocity/Bungee) should create and configure this service.
  */
 public final class PackLayerService {
@@ -35,7 +35,7 @@ public final class PackLayerService {
      */
     public void init() {
         config.load();
-        log("PackLayer initialized with skip-mode: " + config.getSkipMode());
+        log("LayerPack initialized with skip-mode: " + config.getSkipMode());
     }
 
     /**
@@ -43,7 +43,7 @@ public final class PackLayerService {
      */
     public void shutdown() {
         tracker.clear();
-        log("PackLayer shut down. " + statistics.getSummary());
+        log("LayerPack shut down. " + statistics.getSummary());
     }
 
     /**

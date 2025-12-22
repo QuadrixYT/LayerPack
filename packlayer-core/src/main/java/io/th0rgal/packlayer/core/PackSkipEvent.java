@@ -6,7 +6,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.UUID;
 
 /**
- * Event fired when PackLayer is about to skip a resource pack send.
+ * Event fired when LayerPack is about to skip a resource pack send.
  * Other plugins can listen to this event to override the skip decision.
  */
 public final class PackSkipEvent {

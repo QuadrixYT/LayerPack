@@ -21,7 +21,7 @@ public final class PackLayerCommand extends Command implements TabExecutor {
     private final PackLayerService service;
 
     public PackLayerCommand(@NotNull PackLayerService service) {
-        super("packlayer", "packlayer.admin", "pl");
+        super("layerpack", "layerpack.admin", "lp");
         this.service = service;
     }
 
@@ -51,13 +51,13 @@ public final class PackLayerCommand extends Command implements TabExecutor {
 
     private void handleStats(CommandSender sender) {
         PackStatistics stats = service.getStatistics();
-        sendMessage(sender, ChatColor.GOLD + "=== PackLayer Statistics ===");
+        sendMessage(sender, ChatColor.GOLD + "=== LayerPack Statistics ===");
         sendMessage(sender, ChatColor.YELLOW + stats.getSummary());
     }
 
     private void handleClear(CommandSender sender, String[] args) {
         if (args.length < 2) {
-            sendMessage(sender, ChatColor.RED + "Usage: /packlayer clear <player|*>");
+            sendMessage(sender, ChatColor.RED + "Usage: /layerpack clear <player|*>");
             return;
         }
 
@@ -81,7 +81,7 @@ public final class PackLayerCommand extends Command implements TabExecutor {
 
     private void handleInfo(CommandSender sender, String[] args) {
         if (args.length < 2) {
-            sendMessage(sender, ChatColor.RED + "Usage: /packlayer info <player>");
+            sendMessage(sender, ChatColor.RED + "Usage: /layerpack info <player>");
             return;
         }
 
@@ -110,16 +110,16 @@ public final class PackLayerCommand extends Command implements TabExecutor {
     private void handleDebug(CommandSender sender) {
         boolean current = service.getConfig().isDebugMode();
         sendMessage(sender, ChatColor.YELLOW + "Debug mode is currently: " + (current ? "enabled" : "disabled"));
-        sendMessage(sender, ChatColor.GRAY + "Toggle it in config.yml and use /packlayer reload");
+        sendMessage(sender, ChatColor.GRAY + "Toggle it in config.yml and use /layerpack reload");
     }
 
     private void sendHelp(CommandSender sender) {
-        sendMessage(sender, ChatColor.GOLD + "=== PackLayer Commands ===");
-        sendMessage(sender, ChatColor.YELLOW + "/packlayer reload" + ChatColor.GRAY + " - Reload configuration");
-        sendMessage(sender, ChatColor.YELLOW + "/packlayer stats" + ChatColor.GRAY + " - Show statistics");
-        sendMessage(sender, ChatColor.YELLOW + "/packlayer clear <player|*>" + ChatColor.GRAY + " - Clear pack cache");
-        sendMessage(sender, ChatColor.YELLOW + "/packlayer info <player>" + ChatColor.GRAY + " - Show player pack info");
-        sendMessage(sender, ChatColor.YELLOW + "/packlayer debug" + ChatColor.GRAY + " - Debug mode info");
+        sendMessage(sender, ChatColor.GOLD + "=== LayerPack Commands ===");
+        sendMessage(sender, ChatColor.YELLOW + "/layerpack reload" + ChatColor.GRAY + " - Reload configuration");
+        sendMessage(sender, ChatColor.YELLOW + "/layerpack stats" + ChatColor.GRAY + " - Show statistics");
+        sendMessage(sender, ChatColor.YELLOW + "/layerpack clear <player|*>" + ChatColor.GRAY + " - Clear pack cache");
+        sendMessage(sender, ChatColor.YELLOW + "/layerpack info <player>" + ChatColor.GRAY + " - Show player pack info");
+        sendMessage(sender, ChatColor.YELLOW + "/layerpack debug" + ChatColor.GRAY + " - Debug mode info");
     }
 
     private void sendMessage(CommandSender sender, String message) {

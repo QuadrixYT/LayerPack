@@ -38,7 +38,7 @@ public final class PackLayerBungeePlugin extends Plugin {
         // Register commands
         getProxy().getPluginManager().registerCommand(this, new PackLayerCommand(service));
 
-        getLogger().info("PackLayer enabled - " + service.getConfig().getSkipMode() + " mode");
+        getLogger().info("LayerPack enabled - " + service.getConfig().getSkipMode() + " mode");
     }
 
     @Override

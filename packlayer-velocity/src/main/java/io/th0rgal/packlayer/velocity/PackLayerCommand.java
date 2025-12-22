@@ -56,13 +56,13 @@ public final class PackLayerCommand implements SimpleCommand {
 
     private void handleStats(CommandSource source) {
         PackStatistics stats = service.getStatistics();
-        source.sendMessage(Component.text("=== PackLayer Statistics ===", NamedTextColor.GOLD));
+        source.sendMessage(Component.text("=== LayerPack Statistics ===", NamedTextColor.GOLD));
         source.sendMessage(Component.text(stats.getSummary(), NamedTextColor.YELLOW));
     }
 
     private void handleClear(CommandSource source, String[] args) {
         if (args.length < 2) {
-            source.sendMessage(Component.text("Usage: /packlayer clear <player|*>", NamedTextColor.RED));
+            source.sendMessage(Component.text("Usage: /layerpack clear <player|*>", NamedTextColor.RED));
             return;
         }
 
@@ -87,7 +87,7 @@ public final class PackLayerCommand implements SimpleCommand {
 
     private void handleInfo(CommandSource source, String[] args) {
         if (args.length < 2) {
-            source.sendMessage(Component.text("Usage: /packlayer info <player>", NamedTextColor.RED));
+            source.sendMessage(Component.text("Usage: /layerpack info <player>", NamedTextColor.RED));
             return;
         }
 
@@ -118,26 +118,26 @@ public final class PackLayerCommand implements SimpleCommand {
     private void handleDebug(CommandSource source) {
         boolean current = service.getConfig().isDebugMode();
         source.sendMessage(Component.text("Debug mode is currently: " + (current ? "enabled" : "disabled"), NamedTextColor.YELLOW));
-        source.sendMessage(Component.text("Toggle it in config.yml and use /packlayer reload", NamedTextColor.GRAY));
+        source.sendMessage(Component.text("Toggle it in config.yml and use /layerpack reload", NamedTextColor.GRAY));
     }
 
     private void sendHelp(CommandSource source) {
-        source.sendMessage(Component.text("=== PackLayer Commands ===", NamedTextColor.GOLD));
-        source.sendMessage(Component.text("/packlayer reload", NamedTextColor.YELLOW)
+        source.sendMessage(Component.text("=== LayerPack Commands ===", NamedTextColor.GOLD));
+        source.sendMessage(Component.text("/layerpack reload", NamedTextColor.YELLOW)
                 .append(Component.text(" - Reload configuration", NamedTextColor.GRAY)));
-        source.sendMessage(Component.text("/packlayer stats", NamedTextColor.YELLOW)
+        source.sendMessage(Component.text("/layerpack stats", NamedTextColor.YELLOW)
                 .append(Component.text(" - Show statistics", NamedTextColor.GRAY)));
-        source.sendMessage(Component.text("/packlayer clear <player|*>", NamedTextColor.YELLOW)
+        source.sendMessage(Component.text("/layerpack clear <player|*>", NamedTextColor.YELLOW)
                 .append(Component.text(" - Clear pack cache", NamedTextColor.GRAY)));
-        source.sendMessage(Component.text("/packlayer info <player>", NamedTextColor.YELLOW)
+        source.sendMessage(Component.text("/layerpack info <player>", NamedTextColor.YELLOW)
                 .append(Component.text(" - Show player pack info", NamedTextColor.GRAY)));
-        source.sendMessage(Component.text("/packlayer debug", NamedTextColor.YELLOW)
+        source.sendMessage(Component.text("/layerpack debug", NamedTextColor.YELLOW)
                 .append(Component.text(" - Debug mode info", NamedTextColor.GRAY)));
     }
 
     @Override
     public boolean hasPermission(Invocation invocation) {
-        return invocation.source().hasPermission("packlayer.admin");
+        return invocation.source().hasPermission("layerpack.admin");
     }
 
     @Override

@@ -1,6 +1,6 @@
 {
-  "id": "packlayer",
-  "name": "PackLayer",
+  "id": "layerpack",
+  "name": "LayerPack",
   "version": "${version}",
   "description": "${description}",
   "authors": ["Th0rgal"],

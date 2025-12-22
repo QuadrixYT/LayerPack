@@ -81,7 +81,7 @@ tasks.shadowJar {
             "Build-OS" to "${System.getProperty("os.name")} ${System.getProperty("os.arch")} ${System.getProperty("os.version")}"
         )
     }
-    archiveFileName.set("packlayer-${pluginVersion}.jar")
+    archiveFileName.set("layerpack-${pluginVersion}.jar")
 }
 
 dependencies {

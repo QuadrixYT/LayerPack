@@ -1,7 +1,7 @@
 package io.th0rgal.packlayer.core;
 
 /**
- * Determines how PackLayer decides whether to skip a resource pack send.
+ * Determines how LayerPack decides whether to skip a resource pack send.
  */
 public enum SkipMode {
     /**

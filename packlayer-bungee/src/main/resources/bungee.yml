@@ -1,4 +1,4 @@
-name: PackLayer
+name: LayerPack
 main: io.th0rgal.packlayer.bungee.PackLayerBungeePlugin
 version: ${version}
 description: ${description}

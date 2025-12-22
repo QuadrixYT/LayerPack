@@ -18,8 +18,8 @@ import org.slf4j.Logger;
 import java.nio.file.Path;
 
 @Plugin(
-        id = "packlayer",
-        name = "PackLayer",
+        id = "layerpack",
+        name = "LayerPack",
         version = "${version}",
         description = "${description}",
         authors = {"Th0rgal"}
@@ -68,13 +68,13 @@ public final class PackLayerVelocityPlugin {
 
         // Register commands
         CommandMeta meta = server.getCommandManager()
-                .metaBuilder("packlayer")
-                .aliases("pl")
+                .metaBuilder("layerpack")
+                .aliases("lp")
                 .plugin(pluginContainer)
                 .build();
         server.getCommandManager().register(meta, new PackLayerCommand(server, service));
 
-        logger.info("PackLayer enabled - " + service.getConfig().getSkipMode() + " mode");
+        logger.info("LayerPack enabled - " + service.getConfig().getSkipMode() + " mode");
     }
 
     @Subscribe
@@ -83,7 +83,7 @@ public final class PackLayerVelocityPlugin {
             service.shutdown();
         }
         PacketEvents.getAPI().terminate();
-        logger.info("PackLayer disabled");
+        logger.info("LayerPack disabled");
     }
 
     public PackLayerService getService() {

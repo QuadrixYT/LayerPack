@@ -12,7 +12,7 @@ import java.util.*;
 import java.util.regex.Pattern;
 
 /**
- * Configuration for PackLayer plugin.
+ * Configuration for LayerPack plugin.
  */
 public final class PackLayerConfig {
 
@@ -110,10 +110,10 @@ public final class PackLayerConfig {
             Path configPath = dataFolder.resolve(CONFIG_FILE);
 
             String defaultConfig = """
-                    # PackLayer Configuration
+                    # LayerPack Configuration
                     # Optimizes resource pack distribution on proxy networks
 
-                    # Skip Mode - determines how PackLayer decides to skip duplicate packs
+                    # Skip Mode - determines how LayerPack decides to skip duplicate packs
                     # Options:
                     #   HASH_ONLY    - Skip if SHA-1 hash matches (default, recommended)
                     #   URL_ONLY     - Skip if URL matches
@@ -123,7 +123,7 @@ public final class PackLayerConfig {
                     #   NEVER_SKIP   - Never skip (effectively disables plugin)
                     skip-mode: HASH_ONLY
 
-                    # Server Filter - control which backend servers PackLayer applies to
+                    # Server Filter - control which backend servers LayerPack applies to
                     server-filter:
                       # Mode: DISABLED (all servers), WHITELIST, or BLACKLIST
                       mode: DISABLED
