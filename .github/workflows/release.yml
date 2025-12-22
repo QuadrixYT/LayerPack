@@ -1,0 +1,65 @@
+name: Build & Release
+
+on:
+  release:
+    types: [published]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Java 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v4
+
+      - name: Build with Gradle
+        run: ./gradlew shadowJar
+
+      - name: Get version from gradle.properties
+        id: version
+        run: |
+          VERSION=$(grep '^pluginVersion=' gradle.properties | cut -d'=' -f2)
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+          echo "jar_name=layerpack-${VERSION}.jar" >> $GITHUB_OUTPUT
+
+      - name: Upload JAR as artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: layerpack-${{ steps.version.outputs.version }}
+          path: build/libs/layerpack-${{ steps.version.outputs.version }}.jar
+          if-no-files-found: error
+
+      - name: Copy JAR with stable name
+        run: cp build/libs/layerpack-${{ steps.version.outputs.version }}.jar build/libs/layerpack.jar
+
+      - name: Upload JAR to Release
+        if: github.event_name == 'release'
+        uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            build/libs/layerpack-${{ steps.version.outputs.version }}.jar
+            build/libs/layerpack.jar
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Summary
+        run: |
+          echo "## Build Summary" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "✅ Successfully built LayerPack" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "📦 **Artifact:** layerpack-${{ steps.version.outputs.version }}.jar" >> $GITHUB_STEP_SUMMARY
+          if [[ "${{ github.event_name }}" == "release" ]]; then
+            echo "🏷️ **Release:** ${{ github.event.release.tag_name }}" >> $GITHUB_STEP_SUMMARY
+            echo "📎 JAR attached to release" >> $GITHUB_STEP_SUMMARY
+          fi
