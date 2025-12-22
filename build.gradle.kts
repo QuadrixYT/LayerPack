@@ -81,7 +81,7 @@ tasks.shadowJar {
             "Build-OS" to "${System.getProperty("os.name")} ${System.getProperty("os.arch")} ${System.getProperty("os.version")}"
         )
     }
-    archiveFileName.set("bungee-pack-layer-${pluginVersion}.jar")
+    archiveFileName.set("packlayer-${pluginVersion}.jar")
 }
 
 dependencies {
