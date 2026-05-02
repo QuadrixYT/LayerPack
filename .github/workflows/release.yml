@@ -1,8 +1,9 @@
 name: Build & Release
 
 on:
-  release:
-    types: [published]
+  push:
+    branches:
+      - master
   workflow_dispatch:
 
 permissions:
@@ -51,10 +52,10 @@ jobs:
         run: cp build/libs/layerpack-${{ steps.version.outputs.version }}.jar build/libs/layerpack.jar
 
       - name: Upload JAR to Release
-        if: github.event_name == 'release'
         uses: softprops/action-gh-release@v2
         with:
-          tag_name: ${{ github.event.release.tag_name }}
+          tag_name: ${{ steps.version.outputs.version }}
+          name: LayerPack ${{ steps.version.outputs.version }}
           files: |
             build/libs/layerpack-${{ steps.version.outputs.version }}.jar
             build/libs/layerpack.jar
@@ -69,7 +70,5 @@ jobs:
           echo "☕ **Java:** 25" >> $GITHUB_STEP_SUMMARY
           echo "🛠️ **Gradle:** 9.5.0" >> $GITHUB_STEP_SUMMARY
           echo "📦 **Artifact:** layerpack-${{ steps.version.outputs.version }}.jar" >> $GITHUB_STEP_SUMMARY
-          if [[ "${{ github.event_name }}" == "release" ]]; then
-            echo "🏷️ **Release:** ${{ github.event.release.tag_name }}" >> $GITHUB_STEP_SUMMARY
-            echo "📎 JAR attached to release" >> $GITHUB_STEP_SUMMARY
-          fi
+          echo "🏷️ **Release:** ${{ steps.version.outputs.version }}" >> $GITHUB_STEP_SUMMARY
+          echo "📎 JAR attached to release" >> $GITHUB_STEP_SUMMARY
