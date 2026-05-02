@@ -89,8 +89,8 @@ project(":packlayer-bungee") {
 
 project(":packlayer-velocity") {
     dependencies {
-        compileOnly("com.velocitypowered:velocity-api:3.5.0-SNAPSHOT")
-        annotationProcessor("com.velocitypowered:velocity-api:3.5.0-SNAPSHOT")
+        compileOnly("com.velocitypowered:velocity-api:3.4.0-SNAPSHOT")
+        annotationProcessor("com.velocitypowered:velocity-api:3.4.0-SNAPSHOT")
 
         compileOnly("org.jetbrains:annotations:24.0.1")
 
