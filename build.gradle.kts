@@ -53,7 +53,7 @@ project(":packlayer-bungee") {
         compileOnly("net.md-5:bungeecord-api:1.20-R0.2")
         compileOnly("org.jetbrains:annotations:24.0.1")
         compileOnly(project(path = ":packlayer-core", configuration = "shadow"))
-        implementation("com.github.retrooper:packetevents-bungeecord:2.11.1")
+        implementation("com.github.retrooper:packetevents-bungeecord:2.12.1")
     }
 }
 
@@ -63,7 +63,7 @@ project(":packlayer-velocity") {
         compileOnly("org.jetbrains:annotations:24.0.1")
         compileOnly(project(path = ":packlayer-core", configuration = "shadow"))
         annotationProcessor("com.velocitypowered:velocity-api:3.3.0-SNAPSHOT")
-        implementation("com.github.retrooper:packetevents-velocity:2.11.1")
+        implementation("com.github.retrooper:packetevents-velocity:2.12.1")
     }
 }
 
