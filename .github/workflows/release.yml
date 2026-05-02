@@ -25,12 +25,24 @@ jobs:
       - name: Build with Gradle
         run: ./gradlew shadowJar
 
-      - name: Get version from gradle.properties
+      - name: Get version
         id: version
+        env:
+          GH_TOKEN: ${{ github.token }}
         run: |
-          VERSION=$(grep '^pluginVersion=' gradle.properties | cut -d'=' -f2)
+          if [[ "${{ github.event_name }}" == "release" ]]; then
+            VERSION="${{ github.event.release.tag_name }}"
+          else
+            VERSION=$(gh release list --limit 1 --json tagName -q '.[0].tagName')
+          fi
+          GRADLE_VERSION=$(grep '^pluginVersion=' gradle.properties | cut -d'=' -f2)
           echo "version=$VERSION" >> $GITHUB_OUTPUT
-          echo "jar_name=layerpack-${VERSION}.jar" >> $GITHUB_OUTPUT
+          echo "gradle_version=$GRADLE_VERSION" >> $GITHUB_OUTPUT
+
+      - name: Rename JAR to release version
+        run: |
+          mv build/libs/layerpack-${{ steps.version.outputs.gradle_version }}.jar \
+             build/libs/layerpack-${{ steps.version.outputs.version }}.jar
 
       - name: Upload JAR as artifact
         uses: actions/upload-artifact@v4
@@ -43,14 +55,13 @@ jobs:
         run: cp build/libs/layerpack-${{ steps.version.outputs.version }}.jar build/libs/layerpack.jar
 
       - name: Upload JAR to Release
-        if: github.event_name == 'release'
         uses: softprops/action-gh-release@v2
         with:
+          tag_name: ${{ steps.version.outputs.version }}
           files: |
             build/libs/layerpack-${{ steps.version.outputs.version }}.jar
             build/libs/layerpack.jar
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ github.token }}
 
       - name: Summary
         run: |
@@ -61,5 +72,7 @@ jobs:
           echo "📦 **Artifact:** layerpack-${{ steps.version.outputs.version }}.jar" >> $GITHUB_STEP_SUMMARY
           if [[ "${{ github.event_name }}" == "release" ]]; then
             echo "🏷️ **Release:** ${{ github.event.release.tag_name }}" >> $GITHUB_STEP_SUMMARY
-            echo "📎 JAR attached to release" >> $GITHUB_STEP_SUMMARY
+          else
+            echo "🏷️ **Release:** ${{ steps.version.outputs.version }}" >> $GITHUB_STEP_SUMMARY
           fi
+            echo "📎 JAR attached to release" >> $GITHUB_STEP_SUMMARY
