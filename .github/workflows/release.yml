@@ -25,12 +25,22 @@ jobs:
       - name: Build with Gradle
         run: ./gradlew shadowJar
 
-      - name: Get version from gradle.properties
+      - name: Get version
         id: version
         run: |
-          VERSION=$(grep '^pluginVersion=' gradle.properties | cut -d'=' -f2)
+          if [[ "${{ github.event_name }}" == "release" ]]; then
+            VERSION="${{ github.event.release.tag_name }}"
+          else
+            VERSION=$(grep '^pluginVersion=' gradle.properties | cut -d'=' -f2)
+          fi
+          GRADLE_VERSION=$(grep '^pluginVersion=' gradle.properties | cut -d'=' -f2)
           echo "version=$VERSION" >> $GITHUB_OUTPUT
-          echo "jar_name=layerpack-${VERSION}.jar" >> $GITHUB_OUTPUT
+          echo "gradle_version=$GRADLE_VERSION" >> $GITHUB_OUTPUT
+
+      - name: Rename JAR to release version
+        run: |
+          mv build/libs/layerpack-${{ steps.version.outputs.gradle_version }}.jar \
+             build/libs/layerpack-${{ steps.version.outputs.version }}.jar
 
       - name: Upload JAR as artifact
         uses: actions/upload-artifact@v4
